@@ -1,0 +1,146 @@
+
+
+ .list-group-item{
+     text-align: center;
+ }
+
+ 
+ .nav :hover {
+     border-radius: 78px;
+ }
+
+ .btn{
+     background-color: black;
+ }
+
+ .nav{
+     height: 50px;
+     
+  
+     background-color: white;
+ }
+ 
+ 
+
+ 
+ .cart-badge,
+ .cart-badge:hover {
+     border-radius: 50%;
+     padding: 2px;
+     font-size: 12px;
+     font-style: italic;
+     background:white;
+ }
+
+ .black-10 {
+     background: #f2f2f2;
+ }
+ .black-9 {
+     background: #e6e6e6;
+ }
+ .black-8 {
+     background: #d9d9d9;
+ }
+ .black-7 {
+     background: #cccccc;
+ }
+ .black-6 {
+     background: #bfbfbf;
+ }
+ .black-5 {
+     background: #b3b3b3;
+ }
+ 
+ 
+ 
+ .product-img {
+     min-height: 100px;
+    
+ }
+ .jumbotron h3 {
+    margin-top: 35px;
+    color:white;
+    text-align: center;
+    font-size: 50px;
+    font-family: 'Times New Roman', Times, serif;
+}
+
+.jumbotron p {
+
+    text-align: center;
+    font-family: 'Times New Roman', Times, serif;
+   
+}
+
+.jumbotron h4{
+    text-align: center;
+}
+ 
+ .jumbotron h1 {
+    margin-top: 35px;
+    text-align: center;
+    color:white;
+}
+ .jumbotron h2 {
+     margin-top: 35px;
+     text-align: center;
+     color: black;
+ }
+ 
+ @media only screen and (max-width: 600px) {
+     .jumbotron h2 {
+         margin-top: 30px;
+     }
+ }
+ .card{
+    background: linear-gradient(-45deg,#05386B,#379683,#EDF5E1);
+    font-family: 'Times New Roman', Times, serif;
+ }
+ 
+ 
+ .jumbotron {
+ 
+     color: #fff;
+     background: linear-gradient(45deg, grey,turquoise,yellowgreen,black);
+     font-family: 'Times New Roman', Times, serif;
+     background-size: 400% 400%;
+     -webkit-animation: Gradient 15s ease infinite;
+     -moz-animation: Gradient 15s ease infinite;
+     animation: Gradient 15s ease infinite;
+ }
+ 
+ @-webkit-keyframes Gradient {
+     0% {
+         background-position: 0% 50%;
+     }
+     50% {
+         background-position: 100% 50%;
+     }
+     100% {
+         background-position: 0% 50%;
+     }
+ }
+ 
+ @-moz-keyframes Gradient {
+     0% {
+         background-position: 0% 50%;
+     }
+     50% {
+         background-position: 100% 50%;
+     }
+     100% {
+         background-position: 0% 50%;
+     }
+ }
+ 
+ @keyframes Gradient {
+     0% {
+         background-position: 0% 50%;
+     }
+     50% {
+         background-position: 100% 50%;
+     }
+     100% {
+         background-position: 0% 50%;
+     }
+ }
