@@ -1,4 +1,5 @@
 const { Rating} = require('../models/rating');
+const Product = require('../models/product');
 const { errorHandler } = require('../handlingerror/errorhandler');
 var jsrecommender = require("js-recommender");
 
@@ -23,15 +24,28 @@ exports.create = (req, res) => {
     });;
 };
 
-exports.rem=(req, res)=> {
+exports.rem=(req,res)=> {
+  let productss
+  
+    Product.find()
+    .select('id')
+    .exec((err, products) => {
+        if (err) {
+            return res.status(400).json({
+                error: 'Products not found'
+            });
+        }
+      productss=products
+
+    
+    
     Rating.find({}, function(err, data){
         let userss = data.map((ratings)=>{return ratings.user});
-        let products = data.map((ratings)=>{return ratings.product});
         let ratingss = data.map((ratings)=>{return ratings.rating});
       var arr=[];
       arr=[userss,products,ratingss]
       for(var i=0;i<userss.length;i++){
-    table.setCell(products[i],userss[i],ratingss[i])
+    table.setCell(productss[i],userss[i],ratingss[i])
 
       }  
       var model = recommender.fit(table);
@@ -65,5 +79,5 @@ res.json(jk)
 
 });
 
-}
-   
+});
+} 
