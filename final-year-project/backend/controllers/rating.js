@@ -1,5 +1,7 @@
 const { Rating} = require('../models/rating');
 const Product = require('../models/product');
+const User = require("../models/user");
+const { userById } = require('../controllers/user');
 const { errorHandler } = require('../handlingerror/errorhandler');
 var jsrecommender = require("js-recommender");
 

@@ -7,7 +7,8 @@ const { ObjectId } = mongoose.Schema;
 const RatingSchema = new mongoose.Schema(
   {
    
-       rating: { type: Number},
+       rating: { type: Number,
+       default:0},
        user: { type: ObjectId, ref: "User" },
        product: { type: ObjectId, ref: "Product" },
        
