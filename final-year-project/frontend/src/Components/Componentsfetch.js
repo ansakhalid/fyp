@@ -1,9 +1,9 @@
-import { API } from "../configuration";
-import queryString from "query-string";
+import { API } from '../configuration';
+import queryString from 'query-string';
 
 export const getProducts = (sortBy) => {
   return fetch(`${API}/products?sortBy=${sortBy}&order=desc&limit=6`, {
-    method: "GET",
+    method: 'GET',
   })
     .then((response) => {
       return response.json();
@@ -13,7 +13,7 @@ export const getProducts = (sortBy) => {
 
 export const getCategories = () => {
   return fetch(`${API}/categories`, {
-    method: "GET",
+    method: 'GET',
   })
     .then((response) => {
       return response.json();
@@ -28,10 +28,10 @@ export const getFilteredProducts = (skip, limit, filters = {}) => {
     filters,
   };
   return fetch(`${API}/products/by/search`, {
-    method: "POST",
+    method: 'POST',
     headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json",
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
     },
     body: JSON.stringify(data),
   })
@@ -45,9 +45,9 @@ export const getFilteredProducts = (skip, limit, filters = {}) => {
 
 export const list = (params) => {
   const query = queryString.stringify(params);
-  console.log("query", query);
+  console.log('query', query);
   return fetch(`${API}/products/search?${query}`, {
-    method: "GET",
+    method: 'GET',
   })
     .then((response) => {
       return response.json();
@@ -57,7 +57,7 @@ export const list = (params) => {
 
 export const read = (productId) => {
   return fetch(`${API}/product/${productId}`, {
-    method: "GET",
+    method: 'GET',
   })
     .then((response) => {
       return response.json();
@@ -67,7 +67,17 @@ export const read = (productId) => {
 
 export const listRelated = (productId) => {
   return fetch(`${API}/products/related/${productId}`, {
-    method: "GET",
+    method: 'GET',
+  })
+    .then((response) => {
+      return response.json();
+    })
+    .catch((err) => console.log(err));
+};
+
+export const getRecommendedProducts = (productId) => {
+  return fetch(`${API}/products/recommended`, {
+    method: 'GET',
   })
     .then((response) => {
       return response.json();
@@ -77,10 +87,10 @@ export const listRelated = (productId) => {
 
 export const getBraintreeClientToken = (userId, token) => {
   return fetch(`${API}/braintree/getToken/${userId}`, {
-    method: "GET",
+    method: 'GET',
     headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json",
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
       Authorization: `Bearer ${token}`,
     },
   })
@@ -92,10 +102,10 @@ export const getBraintreeClientToken = (userId, token) => {
 
 export const processPayment = (userId, token, paymentData) => {
   return fetch(`${API}/braintree/payment/${userId}`, {
-    method: "POST",
+    method: 'POST',
     headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json",
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
       Authorization: `Bearer ${token}`,
     },
     body: JSON.stringify(paymentData),
@@ -108,10 +118,10 @@ export const processPayment = (userId, token, paymentData) => {
 
 export const createOrder = (userId, token, createOrderData) => {
   return fetch(`${API}/order/create/${userId}`, {
-    method: "POST",
+    method: 'POST',
     headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json",
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
       Authorization: `Bearer ${token}`,
     },
     body: JSON.stringify({ order: createOrderData }),
@@ -124,10 +134,10 @@ export const createOrder = (userId, token, createOrderData) => {
 
 export const addRating = (userId, productID, token, rating) => {
   return fetch(`${API}/rating/create/${userId}/${productID}`, {
-    method: "POST",
+    method: 'POST',
     headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json",
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
       Authorization: `Bearer ${token}`,
     },
     body: JSON.stringify({ rating }),

@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from "react";
-import Layout from "./deafaultdesign";
-import { read, listRelated } from "./Componentsfetch";
-import Card from "./productdisplay";
-import SingleProduct from "./SingleProduct";
+import React, { useState, useEffect } from 'react';
+import Layout from './deafaultdesign';
+import { read, listRelated } from './Componentsfetch';
+import Card from './productdisplay';
+import SingleProduct from './SingleProduct';
 
 const Product = (props) => {
   const [product, setProduct] = useState(null);
@@ -41,25 +41,25 @@ const Product = (props) => {
           product.description &&
           product.description.substring(0, 100)
         }
-        className="container-fluid"
+        className='container-fluid'
       />
-      <section className="ftco-section bg-light">
-        <div className="container">
-          <div className="row">
-            <div className="col-12">
+      <section className='ftco-section bg-light'>
+        <div className='container'>
+          <div className='row'>
+            <div className='col-12'>
               {/* {product && product.description && (
             <Card product={product} showViewProductButton={false} />
           )} */}
               {product && <SingleProduct product={product} />}
             </div>
           </div>
-          <div className="row">
-            <div className="col-12">
+          <div className='row'>
+            <div className='col-12'>
               <h4>Related products</h4>
-              <div className="container">
-                <div className="row">
+              <div className='container'>
+                <div className='row'>
                   {relatedProduct.map((p, i) => (
-                    <div className="col-xs-12 col-md-4 col-xl-3" key={i}>
+                    <div className='col-xs-12 col-md-4 col-xl-3' key={i}>
                       <Card product={p} />
                     </div>
                   ))}

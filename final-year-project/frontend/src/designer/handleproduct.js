@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from "react";
-import Layout from "../Components/deafaultdesign";
-import { isAuthenticated } from "../path/fetchprofiling";
-import { Link } from "react-router-dom";
-import { getProducts, deleteProduct } from "./fetchdesigner";
+import React, { useState, useEffect } from 'react';
+import Layout from '../Components/deafaultdesign';
+import { isAuthenticated } from '../path/fetchprofiling';
+import { Link } from 'react-router-dom';
+import { getProducts, deleteProduct } from './fetchdesigner';
 
 const ManageProducts = () => {
   const [products, setProducts] = useState([]);
@@ -15,7 +15,6 @@ const ManageProducts = () => {
         console.log(data.error);
       } else {
         setProducts(data);
-        console.log("Products: ", data);
       }
     });
   };
@@ -37,53 +36,53 @@ const ManageProducts = () => {
   return (
     <>
       <Layout
-        title="Manage Products"
-        description="Update or Delete your products"
-        className="container-fluid"
+        title='Manage Products'
+        description='Update or Delete your products'
+        className='container-fluid'
       />
-      <section className="ftco-section bg-light">
-        <div className="container">
-          <div className="row">
-            <div className="col-12">
-              <h4 className="text-center">Total {products.length} products</h4>
+      <section className='ftco-section bg-light'>
+        <div className='container'>
+          <div className='row'>
+            <div className='col-12'>
+              <h4 className='text-center'>Total {products.length} products</h4>
               <hr />
             </div>
           </div>
-          <div className="row">
+          <div className='row'>
             {products.map((p) => (
               <div
                 key={p._id}
-                className="col-sm col-md-6 col-lg-3 ftco-animate fadeInUp ftco-animated"
+                className='col-sm col-md-6 col-lg-3 ftco-animate fadeInUp ftco-animated'
               >
-                <div className="product">
-                  <span className="img-prod">
+                <div className='product'>
+                  <span className='img-prod'>
                     <img
-                      className="img-fluid"
-                      src={`${process.env.REACT_APP_API_URL}/product/photo/${p._id}`}
-                      alt="Colorlib Template"
+                      className='img-fluid'
+                      src={`${p.photo}`}
+                      alt='Colorlib Template'
                     />
                   </span>
-                  <div className="text py-3 px-3">
+                  <div className='text py-3 px-3'>
                     <h3>{p.name}</h3>
-                    <div className="d-flex">
-                      <div className="pricing">
-                        <p className="price">
+                    <div className='d-flex'>
+                      <div className='pricing'>
+                        <p className='price'>
                           <span>${p.price}</span>
                         </p>
                       </div>
                     </div>
                     <hr />
-                    <p className="bottom-area d-flex">
+                    <p className='bottom-area d-flex'>
                       <Link
                         to={`/designer/product/update/${p._id}`}
-                        className="add-to-cart"
+                        className='add-to-cart'
                       >
                         <span>Update</span>
                       </Link>
                       <span
-                        style={{ cursor: "pointer" }}
+                        style={{ cursor: 'pointer' }}
                         onClick={() => destroy(p._id)}
-                        className="ml-auto add-to-cart text-danger"
+                        className='ml-auto add-to-cart text-danger'
                       >
                         Delete
                       </span>

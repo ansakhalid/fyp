@@ -1,22 +1,22 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect } from 'react';
 import {
   getBraintreeClientToken,
   processPayment,
   createOrder,
-} from "./Componentsfetch";
-import { emptyCart } from "./cart";
-import { isAuthenticated } from "../path/fetchprofiling";
-import { Link } from "react-router-dom";
-import DropIn from "braintree-web-drop-in-react";
+} from './Componentsfetch';
+import { emptyCart } from './cart';
+import { isAuthenticated } from '../path/fetchprofiling';
+import { Link } from 'react-router-dom';
+import DropIn from 'braintree-web-drop-in-react';
 
 const Checkout = ({ products, setRun = (f) => f, run = undefined }) => {
   const [data, setData] = useState({
     loading: false,
     success: false,
     clientToken: null,
-    error: "",
+    error: '',
     instance: {},
-    address: "",
+    address: '',
   });
 
   const userId = isAuthenticated() && isAuthenticated().user._id;
@@ -52,8 +52,8 @@ const Checkout = ({ products, setRun = (f) => f, run = undefined }) => {
     return isAuthenticated() ? (
       <div>{showDropIn()}</div>
     ) : (
-      <Link to="/signin">
-        <button className="btn btn-primary">Sign in to checkout</button>
+      <Link to='/signin'>
+        <button className='btn btn-primary'>Sign in to checkout</button>
       </Link>
     );
   };
@@ -76,8 +76,6 @@ const Checkout = ({ products, setRun = (f) => f, run = undefined }) => {
 
         processPayment(userId, token, paymentData)
           .then((response) => {
-            console.log(response);
-
             const createOrderData = {
               products: products,
               transaction_id: response.transaction.id,
@@ -89,7 +87,6 @@ const Checkout = ({ products, setRun = (f) => f, run = undefined }) => {
               .then((response) => {
                 emptyCart(() => {
                   setRun(!run);
-                  console.log("payment success and empty cart");
                   setData({
                     loading: false,
                     success: true,
@@ -112,16 +109,16 @@ const Checkout = ({ products, setRun = (f) => f, run = undefined }) => {
   };
 
   const showDropIn = () => (
-    <div onBlur={() => setData({ ...data, error: "" })}>
+    <div onBlur={() => setData({ ...data, error: '' })}>
       {data.clientToken !== null && products.length > 0 ? (
         <div>
-          <div className="gorm-group mb-3">
-            <label className="text-dark">Delivery address:</label>
+          <div className='gorm-group mb-3'>
+            <label className='text-dark'>Delivery address:</label>
             <textarea
               onChange={handleAddress}
-              className="form-control"
+              className='form-control'
               value={data.address}
-              placeholder="Type your delivery address here..."
+              placeholder='Type your delivery address here...'
             />
           </div>
 
@@ -129,12 +126,12 @@ const Checkout = ({ products, setRun = (f) => f, run = undefined }) => {
             options={{
               authorization: data.clientToken,
               paypal: {
-                flow: "vault",
+                flow: 'vault',
               },
             }}
             onInstance={(instance) => (data.instance = instance)}
           />
-          <button onClick={buy} className="btn btn-success btn-block">
+          <button onClick={buy} className='btn btn-success btn-block'>
             Pay
           </button>
         </div>
@@ -144,8 +141,8 @@ const Checkout = ({ products, setRun = (f) => f, run = undefined }) => {
 
   const showError = (error) => (
     <div
-      className="alert alert-danger"
-      style={{ display: error ? "" : "none" }}
+      className='alert alert-danger'
+      style={{ display: error ? '' : 'none' }}
     >
       {error}
     </div>
@@ -153,21 +150,21 @@ const Checkout = ({ products, setRun = (f) => f, run = undefined }) => {
 
   const showSuccess = (success) => (
     <div
-      className="alert alert-info"
-      style={{ display: success ? "" : "none" }}
+      className='alert alert-info'
+      style={{ display: success ? '' : 'none' }}
     >
       Thank you! Your payment was successful!
     </div>
   );
 
   const showLoading = (loading) =>
-    loading && <h2 className="text-danger">Loading...</h2>;
+    loading && <h2 className='text-danger'>Loading...</h2>;
 
   return (
     <div>
-      <h4 className="text-dark">Checkout</h4>
+      <h4 className='text-dark'>Checkout</h4>
       {/* <h2 className="text-dark">Total: ${getTotal()}</h2> */}
-      <p class="d-flex total-price">
+      <p class='d-flex total-price'>
         <span>Total</span>
         <span>${getTotal()}</span>
       </p>

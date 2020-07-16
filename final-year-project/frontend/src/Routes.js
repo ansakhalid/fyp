@@ -23,30 +23,46 @@ import UpdateCategory from './admin/editcategory';
 import DesignerDashboard from './designer/DesignerDashboard';
 
 const Routes = () => {
-    return (
-        <BrowserRouter>
-            <Switch>
-                <Route path="/" exact component={Home} />
-                <Route path="/shop" exact component={Shop} />
-                <Route path="/shophome" exact component={ShopHome} />
-                <Route path="/signin" exact component={Signin} />
-                <Route path="/signup" exact component={Signup} />
-                <PrivateRoute path="/user/dashboard" exact component={Dashboard} />
-                <AdminRoute path="/admin/dashboard" exact component={AdminDashboard} />
-                <DesignerRoute path="/designer/dashboard" exact component={DesignerDashboard}/>
-                <AdminRoute path="/create/category" exact component={AddCategory} />
-                <DesignerRoute path="/create/product" exact component={AddProduct} />
-                <Route path="/product/:productId" exact component={Product} />
-                <Route path="/cart" exact component={Cart} />
-                <AdminRoute path="/admin/orders" exact component={Orders} />
-                <AdminRoute path="/admin/record" exact component={Record} />
-                <PrivateRoute path="/profile/:userId" exact component={Profile} />
-                <PrivateRoute path="/designer/products" exact component={ManageProducts} />
-                <DesignerRoute path="/designer/product/update/:productId" exact component={UpdateProduct} />
-                <AdminRoute path="/design/category/update/:categoryId" exact component={UpdateCategory} />
-            </Switch>
-        </BrowserRouter>
-    );
+  return (
+    <BrowserRouter>
+      <Switch>
+        <Route path='/' exact component={Home} />
+        <Route path='/shop' exact component={Shop} />
+        <Route path='/shophome' exact component={ShopHome} />
+        <Route path='/signin' exact component={Signin} />
+        <Route path='/signup' exact component={Signup} />
+        <PrivateRoute path='/user/dashboard' exact component={Dashboard} />
+        <AdminRoute path='/admin/dashboard' exact component={AdminDashboard} />
+        <DesignerRoute
+          path='/designer/dashboard'
+          exact
+          component={DesignerDashboard}
+        />
+        <AdminRoute path='/create/category' exact component={AddCategory} />
+        <DesignerRoute path='/create/product' exact component={AddProduct} />
+        <Route path='/product/:productId' exact component={Product} />
+        <Route path='/cart' exact component={Cart} />
+        <AdminRoute path='/admin/orders' exact component={Orders} />
+        <AdminRoute path='/admin/record' exact component={Record} />
+        <PrivateRoute path='/profile/:userId' exact component={Profile} />
+        <PrivateRoute
+          path='/designer/products'
+          exact
+          component={ManageProducts}
+        />
+        <DesignerRoute
+          path='/designer/product/update/:productId'
+          exact
+          component={UpdateProduct}
+        />
+        <AdminRoute
+          path='/design/category/update/:categoryId'
+          exact
+          component={UpdateCategory}
+        />
+      </Switch>
+    </BrowserRouter>
+  );
 };
 
 export default Routes;

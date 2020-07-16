@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from "react";
-import Layout from "../Components/deafaultdesign";
-import { isAuthenticated } from "../path/fetchprofiling";
-import { listOrders, getStatusValues, updateOrderStatus } from "./fetchadmin";
-import ShowImage from "../Components/image";
-import { Link } from "react-router-dom";
+import React, { useState, useEffect } from 'react';
+import Layout from '../Components/deafaultdesign';
+import { isAuthenticated } from '../path/fetchprofiling';
+import { listOrders, getStatusValues, updateOrderStatus } from './fetchadmin';
+import ShowImage from '../Components/image';
+import { Link } from 'react-router-dom';
 
 const Record = () => {
   const [orders, setOrders] = useState([]);
@@ -33,7 +33,7 @@ const Record = () => {
 
   useEffect(() => {
     loadOrders();
-    loadStatusValues();
+    // loadStatusValues();
   }, []);
 
   const showOrdersLength = () => {
@@ -41,11 +41,11 @@ const Record = () => {
       return <h4>Total orders: {orders.length}</h4>;
     } else {
       return (
-        <div style={{ textAlign: "center" }}>
+        <div style={{ textAlign: 'center' }}>
           <img
-            src={require("./images/undraw_empty_xct9.png")}
-            width="500px"
-            alt="Empty"
+            src={require('./images/undraw_empty_xct9.png')}
+            width='500px'
+            alt='Empty'
           />
           <h5>There are no orders yet!</h5>
         </div>
@@ -54,18 +54,18 @@ const Record = () => {
   };
 
   const showInput = (key, value) => (
-    <div className="input-group mb-2 mr-sm-2">
-      <div className="input-group-prepend">
-        <div className="input-group-text">{key}</div>
+    <div className='input-group mb-2 mr-sm-2'>
+      <div className='input-group-prepend'>
+        <div className='input-group-text'>{key}</div>
       </div>
-      <input type="text" value={value} className="form-control" readOnly />
+      <input type='text' value={value} className='form-control' readOnly />
     </div>
   );
 
   const handleStatusChange = (e, orderId) => {
     updateOrderStatus(user._id, token, orderId, e.target.value).then((data) => {
       if (data.error) {
-        console.log("Status update failed");
+        console.log('Status update failed');
       } else {
         loadOrders();
       }
@@ -73,10 +73,10 @@ const Record = () => {
   };
 
   const showStatus = (o) => (
-    <div className="form-group">
-      <h2 className=" mb-4">Status: {o.status}</h2>
+    <div className='form-group'>
+      <h2 className=' mb-4'>Status: {o.status}</h2>
       <select
-        className="form-control"
+        className='form-control'
         onChange={(e) => handleStatusChange(e, o._id)}
       >
         <option>Update Status</option>
@@ -92,20 +92,20 @@ const Record = () => {
   return (
     <>
       <Layout
-        title="PURCHASE RECORDS"
+        title='PURCHASE RECORDS'
         description={`WELCOME ${user.name}, you can view purchase records here`}
-        className="container-fluid"
+        className='container-fluid'
       />
-      <section className="ftco-section">
-        <div className="container">
-          <div className="row">
-            <div className="col-md-12">
+      <section className='ftco-section'>
+        <div className='container'>
+          <div className='row'>
+            <div className='col-md-12'>
               {showOrdersLength()}
               <hr />
               {orders.length > 0 && (
-                <div className="table-responsive">
-                  <table className="table table-hover">
-                    <thead className="thead-primary">
+                <div className='table-responsive'>
+                  <table className='table table-hover'>
+                    <thead className='thead-primary'>
                       <tr>
                         <th>Order ID</th>
                         <th>Product ID</th>
@@ -118,7 +118,7 @@ const Record = () => {
                     <tbody>
                       {orders.map((o) =>
                         o.products.map((p, index) => (
-                          <tr key={index} className="text-center">
+                          <tr key={index} className='text-center'>
                             <td>{o._id}</td>
                             <td>{p._id}</td>
                             <td>
@@ -132,7 +132,7 @@ const Record = () => {
                             </td>
                             <td>
                               <Link to={`/product/${p._id}`}>
-                                <button className="btn btn-primary">
+                                <button className='btn btn-primary'>
                                   View Product
                                 </button>
                               </Link>

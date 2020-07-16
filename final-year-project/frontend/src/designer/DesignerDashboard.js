@@ -1,7 +1,7 @@
-import React from "react";
-import Layout from "../Components/deafaultdesign";
-import { isAuthenticated } from "../path/fetchprofiling";
-import { Link } from "react-router-dom";
+import React from 'react';
+import Layout from '../Components/deafaultdesign';
+import { isAuthenticated } from '../path/fetchprofiling';
+import { Link } from 'react-router-dom';
 
 const DesignerDashboard = () => {
   const {
@@ -10,17 +10,17 @@ const DesignerDashboard = () => {
 
   const designerLinks = () => {
     return (
-      <div className="card">
-        <h4 className="card-header  text-dark">Designer Links</h4>
-        <ul className="list-group">
-          <li className="list-group-item">
-            <Link className="nav-link" to="/create/product">
+      <div className='card'>
+        <h4 className='card-header  text-dark'>Designer Links</h4>
+        <ul className='list-group'>
+          <li className='list-group-item'>
+            <Link className='nav-link' to='/create/product'>
               CREATE PRODUCT
             </Link>
           </li>
 
-          <li className="list-group-item">
-            <Link className="nav-link" to="/designer/products">
+          <li className='list-group-item'>
+            <Link className='nav-link' to='/designer/products'>
               MANAGE LISTING
             </Link>
           </li>
@@ -31,13 +31,13 @@ const DesignerDashboard = () => {
 
   const designerInfo = () => {
     return (
-      <div className="card mb-5">
-        <h4 className="card-header  text-dark">User Information</h4>
-        <ul className="list-group">
-          <li className="list-group-item text-dark">{name}</li>
-          <li className="list-group-item text-dark">{email}</li>
-          <li className="list-group-item text-dark">
-            {role.toString() === "designer" ? "Designer" : "Registered User"}
+      <div className='card mb-5'>
+        <h4 className='card-header  text-dark'>User Information</h4>
+        <ul className='list-group'>
+          <li className='list-group-item text-dark'>{name}</li>
+          <li className='list-group-item text-dark'>{email}</li>
+          <li className='list-group-item text-dark'>
+            {role.toString() === 'designer' ? 'Designer' : 'Registered User'}
           </li>
         </ul>
       </div>
@@ -47,15 +47,15 @@ const DesignerDashboard = () => {
   return (
     <>
       <Layout
-        title="Dashboard"
+        title='Dashboard'
         description={`Welcome  ${name}!`}
-        className="container-fluid"
+        className='container-fluid'
       ></Layout>
-      <section className="ftco-section bg-light">
-        <div className="container">
-          <div className="row">
-            <div className="col-3">{designerLinks()}</div>
-            <div className="col-9">{designerInfo()}</div>
+      <section className='ftco-section bg-light'>
+        <div className='container'>
+          <div className='row'>
+            <div className='col-3'>{designerLinks()}</div>
+            <div className='col-9'>{designerInfo()}</div>
           </div>
         </div>
       </section>

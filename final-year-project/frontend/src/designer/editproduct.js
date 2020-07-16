@@ -1,9 +1,41 @@
-import React, { useState, useEffect, useRef } from "react";
-import Layout from "../Components/deafaultdesign";
-import { isAuthenticated } from "../path/fetchprofiling";
-import { Link, Redirect } from "react-router-dom";
-import { getProduct, updateProduct } from "./fetchdesigner";
-import { getCategories } from "../admin/fetchadmin";
+import React, { useState, useEffect, useRef } from 'react';
+import Layout from '../Components/deafaultdesign';
+import { isAuthenticated } from '../path/fetchprofiling';
+import { Link, Redirect } from 'react-router-dom';
+import { getProduct, updateProduct } from './fetchdesigner';
+import { getCategories } from '../admin/fetchadmin';
+
+// Shirts
+import WhiteShirt from '../images/Shirts/White.png';
+import YellowShirt from '../images/Shirts/Yellow.png';
+import GreenShirt from '../images/Shirts/Green.png';
+import BlueShirt from '../images/Shirts/Blue.png';
+import PurpleShirt from '../images/Shirts/Purple.png';
+import RedShirt from '../images/Shirts/Red.png';
+
+// Hoodies
+import WhiteHoodie from '../images/Hoodies/White.png';
+import YellowHoodie from '../images/Hoodies/Yellow.png';
+import GreenHoodie from '../images/Hoodies/Green.png';
+import BlueHoodie from '../images/Hoodies/Blue.png';
+import PurpleHoodie from '../images/Hoodies/Purple.png';
+import RedHoodie from '../images/Hoodies/Red.png';
+
+// Sweaters
+import WhiteSweater from '../images/Sweaters/White.png';
+import YellowSweater from '../images/Sweaters/Yellow.png';
+import GreenSweater from '../images/Sweaters/Green.png';
+import BlueSweater from '../images/Sweaters/Blue.png';
+import PurpleSweater from '../images/Sweaters/Purple.png';
+import RedSweater from '../images/Sweaters/Red.png';
+
+// Trousers
+import WhiteTrouser from '../images/Trousers/White.png';
+import YellowTrouser from '../images/Trousers/Yellow.png';
+import GreenTrouser from '../images/Trousers/Green.png';
+import BlueTrouser from '../images/Trousers/Blue.png';
+import PurpleTrouser from '../images/Trousers/Purple.png';
+import RedTrouser from '../images/Trousers/Red.png';
 
 const UpdateProduct = ({ match }) => {
   const canvasRef = useRef(null);
@@ -11,17 +43,17 @@ const UpdateProduct = ({ match }) => {
   const imagePhotoRef = useRef(null);
 
   const [previewData, setPreviewData] = useState({
-    text: "",
-    textSize: "",
-    xPosition: "",
-    yPosition: "",
-    maxWidth: "",
-    rotationDegrees: "",
-    textColor: "",
-    imageXPosition: "",
-    imageYPosition: "",
-    imageWidth: "",
-    imageHeight: "",
+    text: '',
+    textSize: '30',
+    xPosition: '100',
+    yPosition: '100',
+    maxWidth: '0',
+    rotationDegrees: '0',
+    textColor: 'black',
+    imageXPosition: '100',
+    imageYPosition: '100',
+    imageWidth: '100',
+    imageHeight: '100',
   });
 
   const {
@@ -39,33 +71,35 @@ const UpdateProduct = ({ match }) => {
   } = previewData;
 
   const [values, setValues] = useState({
-    name: "",
-    description: "",
-    price: "",
-    categories: [],
-    category: "",
-    shipping: "",
-    quantity: "",
-    photo: "",
+    id: '',
+    name: '',
+    description: '',
+    price: '',
+    shipping: '',
+    quantity: '',
+    category: '',
+    photo: '',
     loading: false,
     error: false,
-    createdProduct: "",
+    createdProduct: '',
     redirectToProfile: false,
-    formData: "",
-    imageURL: "",
-    imagePhotoURL: "",
+    formData: '',
+    imageURL: '',
+    imagePhotoURL: '',
+    productType: '',
+    productColor: '',
   });
   const [categories, setCategories] = useState([]);
 
   const { user, token } = isAuthenticated();
   const {
+    id,
     name,
     description,
     price,
-    // categories,
-    category,
     shipping,
     quantity,
+    category,
     loading,
     error,
     createdProduct,
@@ -73,21 +107,23 @@ const UpdateProduct = ({ match }) => {
     formData,
     imageURL,
     imagePhotoURL,
+    productType,
+    productColor,
   } = values;
 
   // This function will handle the previewing of image
   const previewImage = () => {
     const wrapText = (context, text, x, y, maxWidth, lineHeight) => {
-      var words = text.split(" ");
-      var line = "";
+      var words = text.split(' ');
+      var line = '';
 
       for (var n = 0; n < words.length; n++) {
-        var testLine = line + words[n] + " ";
+        var testLine = line + words[n] + ' ';
         var metrics = context.measureText(testLine);
         var testWidth = metrics.width;
         if (testWidth > maxWidth && n > 0) {
           context.fillText(line, x, y);
-          line = words[n] + " ";
+          line = words[n] + ' ';
           y += lineHeight;
         } else {
           line = testLine;
@@ -96,20 +132,42 @@ const UpdateProduct = ({ match }) => {
       context.fillText(line, x, y);
     };
 
-    const context = canvasRef.current.getContext("2d");
-    context.clearRect(0, 0, 500, 500);
+    const context = canvasRef.current.getContext('2d');
+    // context.clearRect(0, 0, 500, 500);
 
-    context.drawImage(imageRef.current, 0, 0);
-
-    if (textColor === "black") {
-      context.fillStyle = "#000000";
-    } else {
-      context.fillStyle = "#ffffff";
+    if (!previewImageCalled) {
+      context.drawImage(imageRef.current, 0, 0);
     }
-    context.font = `normal normal bold ${textSize}px arial`;
-    context.textAlign = "center";
 
-    if (maxWidth !== "" && rotationDegrees === "") {
+    switch (textColor) {
+      case 'black':
+        context.fillStyle = '#000000';
+        break;
+      case 'white':
+        context.fillStyle = '#ffffff';
+        break;
+      case 'red':
+        context.fillStyle = '#ff0000';
+        break;
+      case 'blue':
+        context.fillStyle = '#0000ff';
+        break;
+      case 'green':
+        context.fillStyle = '#00ff00';
+        break;
+      case 'yellow':
+        context.fillStyle = '#ffff00';
+        break;
+      case 'purple':
+        context.fillStyle = '#800080';
+        break;
+      default:
+        break;
+    }
+
+    context.font = `normal normal bold ${textSize}px arial`;
+
+    if (maxWidth !== '' && rotationDegrees === '') {
       wrapText(
         context,
         text,
@@ -118,7 +176,7 @@ const UpdateProduct = ({ match }) => {
         parseInt(maxWidth),
         parseInt(textSize)
       );
-    } else if (maxWidth !== "" && rotationDegrees !== "") {
+    } else if (maxWidth !== '' && rotationDegrees !== '') {
       context.save();
       context.rotate((parseInt(rotationDegrees) * Math.PI) / 180);
       wrapText(
@@ -130,7 +188,7 @@ const UpdateProduct = ({ match }) => {
         parseInt(textSize)
       );
       context.restore();
-    } else if (maxWidth === "" && rotationDegrees !== "") {
+    } else if (maxWidth === '' && rotationDegrees !== '') {
       context.save();
       context.rotate((parseInt(rotationDegrees) * Math.PI) / 180);
       context.fillText(text, parseInt(xPosition), parseInt(yPosition));
@@ -156,24 +214,19 @@ const UpdateProduct = ({ match }) => {
         // populate the state
         setValues({
           ...values,
+          id: data._id,
           name: data.name,
           description: data.description,
           price: data.price,
-          category: data.category._id,
-          shipping: data.shipping,
+          shipping: data.shipping ? '1' : '0',
           quantity: data.quantity,
-          imageURL: data.photo.data,
+          imageURL: data.photo,
+          category: data.category._id,
           formData: new FormData(),
         });
-
-        initCategories();
-
-        canvasRef.current.getContext("2d").drawImage(imageRef.current, 0, 0);
       }
     });
-  };
 
-  const initCategories = () => {
     getCategories().then((data) => {
       if (data.error) {
         setValues({ ...values, error: data.error });
@@ -183,42 +236,196 @@ const UpdateProduct = ({ match }) => {
     });
   };
 
+  const [initCalled, setInitCalled] = useState(false);
+  const [formDataInitialized, setFormDataInitialized] = useState(false);
+  const [previewImageCalled, setPreviewImageCalled] = useState(false);
+
   useEffect(() => {
-    init(match.params.productId);
-  }, []);
+    if (initCalled && !previewImageCalled) {
+      previewImage();
+      setPreviewImageCalled(true);
+    } else {
+      updateImageURL();
+    }
+
+    if (!initCalled) {
+      init(match.params.productId);
+      setInitCalled(true);
+    }
+
+    if (formData !== '' && !formDataInitialized) {
+      formData.set('id', id);
+      formData.set('name', name);
+      formData.set('description', description);
+      formData.set('price', price);
+      formData.set('shipping', shipping);
+      formData.set('quantity', quantity);
+    }
+  }, [
+    imageURL,
+    imagePhotoURL,
+    previewData,
+    formData,
+    productType,
+    productColor,
+  ]);
 
   const handleChange = (name) => (event) => {
-    const value = name === "photo" ? event.target.files[0] : event.target.value;
+    const value = name === 'photo' ? event.target.files[0] : event.target.value;
     formData.set(name, value);
     setValues({ ...values, [name]: value });
 
-    if (name === "photo") {
-      const reader = new FileReader();
+    // if (name === 'photo') {
+    //   const reader = new FileReader();
 
-      reader.onload = (e) => {
-        setValues({ ...values, imageURL: e.target.result });
-      };
+    //   reader.onload = (e) => {
+    //     setValues({ ...values, imageURL: e.target.result });
+    //   };
 
-      reader.readAsDataURL(event.target.files[0]);
-    }
+    //   if (event.target.files[0] !== undefined) {
+    //     reader.readAsDataURL(event.target.files[0]);
+    //   }
+    // }
 
-    if (name === "imagePhoto") {
+    if (name === 'imagePhoto') {
       const reader = new FileReader();
 
       reader.onload = (e) => {
         setValues({ ...values, imagePhotoURL: e.target.result });
       };
 
-      reader.readAsDataURL(event.target.files[0]);
+      if (event.target.files[0] !== undefined) {
+        reader.readAsDataURL(event.target.files[0]);
+      }
     }
+  };
+
+  const setImageDataURL = (image) => {
+    const context = canvasRef.current.getContext('2d');
+    context.clearRect(0, 0, 500, 500);
+
+    const newImage = new Image();
+    newImage.src = image;
+    newImage.onload = () => {
+      context.drawImage(newImage, 0, 0, 500, 500);
+      previewImage();
+    };
+  };
+
+  // This function will update the image url
+  const updateImageURL = () => {
+    switch (productType) {
+      case '0':
+        switch (productColor) {
+          case '0':
+            setImageDataURL(RedShirt);
+            break;
+          case '1':
+            setImageDataURL(BlueShirt);
+            break;
+          case '2':
+            setImageDataURL(GreenShirt);
+            break;
+          case '3':
+            setImageDataURL(YellowShirt);
+            break;
+          case '4':
+            setImageDataURL(WhiteShirt);
+            break;
+          case '5':
+            setImageDataURL(PurpleShirt);
+            break;
+          default:
+            break;
+        }
+        break;
+      case '1':
+        switch (productColor) {
+          case '0':
+            setImageDataURL(RedHoodie);
+            break;
+          case '1':
+            setImageDataURL(BlueHoodie);
+            break;
+          case '2':
+            setImageDataURL(GreenHoodie);
+            break;
+          case '3':
+            setImageDataURL(YellowHoodie);
+            break;
+          case '4':
+            setImageDataURL(WhiteHoodie);
+            break;
+          case '5':
+            setImageDataURL(PurpleHoodie);
+            break;
+          default:
+            break;
+        }
+        break;
+      case '2':
+        switch (productColor) {
+          case '0':
+            setImageDataURL(RedSweater);
+            break;
+          case '1':
+            setImageDataURL(BlueSweater);
+            break;
+          case '2':
+            setImageDataURL(GreenSweater);
+            break;
+          case '3':
+            setImageDataURL(YellowSweater);
+            break;
+          case '4':
+            setImageDataURL(WhiteSweater);
+            break;
+          case '5':
+            setImageDataURL(PurpleSweater);
+            break;
+          default:
+            break;
+        }
+        break;
+      case '3':
+        switch (productColor) {
+          case '0':
+            setImageDataURL(RedTrouser);
+            break;
+          case '1':
+            setImageDataURL(BlueTrouser);
+            break;
+          case '2':
+            setImageDataURL(GreenTrouser);
+            break;
+          case '3':
+            setImageDataURL(YellowTrouser);
+            break;
+          case '4':
+            setImageDataURL(WhiteTrouser);
+            break;
+          case '5':
+            setImageDataURL(PurpleTrouser);
+            break;
+          default:
+            break;
+        }
+        break;
+      default:
+        break;
+    }
+  };
+
+  const handlePreviewDataChange = (e) => {
+    setPreviewData({ ...previewData, [e.target.name]: e.target.value });
   };
 
   const clickSubmit = (event) => {
     event.preventDefault();
 
-    formData.set("finalImageURL", canvasRef.current.toDataURL());
+    formData.set('finalImageURL', canvasRef.current.toDataURL());
 
-    setValues({ ...values, error: "", loading: true });
+    setValues({ ...values, error: '', loading: true });
 
     updateProduct(match.params.productId, user._id, token, formData).then(
       (data) => {
@@ -227,14 +434,14 @@ const UpdateProduct = ({ match }) => {
         } else {
           setValues({
             ...values,
-            name: "",
-            description: "",
-            photo: "",
-            price: "",
-            quantity: "",
+            name: '',
+            description: '',
+            photo: '',
+            price: '',
+            quantity: '',
             loading: false,
             error: false,
-            redirectToProfile: true,
+            redirectToProfile: false,
             createdProduct: data.name,
           });
         }
@@ -243,290 +450,288 @@ const UpdateProduct = ({ match }) => {
   };
 
   const newPostForm = () => (
-    <form className="mb-3" onSubmit={clickSubmit}>
-      <h4>Post Photo</h4>
+    <form className='mb-3' onSubmit={clickSubmit}>
+      <h3>Product customization</h3>
 
       {/* Starting of extra */}
-      <div style={{ textAlign: "center", margin: "1rem auto" }}>
+      <div style={{ textAlign: 'center', margin: '1rem auto' }}>
         {/* Loading the canvas */}
         <canvas
           ref={canvasRef}
-          width="500px"
-          height="500px"
-          style={{ backgroundColor: "lightgray" }}
+          width='500px'
+          height='500px'
+          style={{ backgroundColor: 'lightgray' }}
         ></canvas>
 
-        <img ref={imageRef} src={imageURL} alt="" style={{ display: "none" }} />
+        <img ref={imageRef} src={imageURL} alt='' style={{ display: 'none' }} />
         <img
           ref={imagePhotoRef}
           src={imagePhotoURL}
-          alt=""
-          style={{ display: "none" }}
+          alt=''
+          style={{ display: 'none' }}
         />
       </div>
 
-      <div className="form-group">
-        <label className="btn btn-secondary">
-          <input
-            onChange={handleChange("photo")}
-            type="file"
-            name="photo"
-            accept="image/*"
-          />
-        </label>
-        <button
-          type="button"
-          className="btn btn-primary ml-3"
-          onClick={() => previewImage()}
-        >
-          Preview
-        </button>
+      {/* <div className='form-group'>
+        <label>Image</label>
+        <input
+          onChange={handleChange('photo')}
+          type='file'
+          name='photo'
+          accept='image/*'
+          className='form-control'
+        />
+      </div> */}
+
+      <div className='form-row'>
+        <div className='col'>
+          <label>Product type</label>
+          <select
+            onChange={handleChange('productType')}
+            className='form-control'
+            value={productType}
+          >
+            <option value=''>Please select</option>
+            <option value='0'>Shirt</option>
+            <option value='1'>Hoodie</option>
+            <option value='2'>Sweater</option>
+            <option value='3'>Trouser</option>
+          </select>
+        </div>
+
+        <div className='col'>
+          <label>Product color</label>
+          <select
+            onChange={handleChange('productColor')}
+            className='form-control'
+            value={productColor}
+          >
+            <option value=''>Please select</option>
+            <option value='0'>Red</option>
+            <option value='1'>Blue</option>
+            <option value='2'>Green</option>
+            <option value='3'>Yellow</option>
+            <option value='4'>White</option>
+            <option value='5'>Purple</option>
+          </select>
+        </div>
       </div>
 
-      <div className="form-group">
+      <div className='form-group'>
         <label>Text</label>
         <input
-          onChange={(e) =>
-            setPreviewData({ ...previewData, text: e.target.value })
-          }
-          type="text"
-          className="form-control"
+          onChange={(e) => handlePreviewDataChange(e)}
+          type='text'
+          className='form-control'
+          name='text'
           value={text}
         />
       </div>
 
-      <div className="form-row mb-3">
-        <div className="col">
+      <div className='form-row mb-3'>
+        <div className='col'>
           <label>Text size</label>
           <input
-            onChange={(e) =>
-              setPreviewData({
-                ...previewData,
-                textSize: e.target.value,
-              })
-            }
-            type="number"
-            className="form-control"
+            onChange={(e) => handlePreviewDataChange(e)}
+            type='number'
+            className='form-control'
+            name='textSize'
             value={textSize}
           />
         </div>
-        <div className="col">
+        <div className='col'>
           <label>X Position</label>
           <input
-            onChange={(e) =>
-              setPreviewData({
-                ...previewData,
-                xPosition: e.target.value,
-              })
-            }
-            type="number"
-            className="form-control"
+            onChange={(e) => handlePreviewDataChange(e)}
+            type='number'
+            className='form-control'
+            name='xPosition'
             value={xPosition}
           />
         </div>
-        <div className="col">
+        <div className='col'>
           <label>Y Position</label>
           <input
-            onChange={(e) =>
-              setPreviewData({
-                ...previewData,
-                yPosition: e.target.value,
-              })
-            }
-            type="number"
-            className="form-control"
+            onChange={(e) => handlePreviewDataChange(e)}
+            type='number'
+            className='form-control'
+            name='yPosition'
             value={yPosition}
           />
         </div>
       </div>
 
-      <div className="form-row mb-3">
-        <div className="col">
+      <div className='form-row mb-3'>
+        <div className='col'>
           <label>Max width</label>
           <input
-            onChange={(e) =>
-              setPreviewData({
-                ...previewData,
-                maxWidth: e.target.value,
-              })
-            }
-            type="number"
-            className="form-control"
+            onChange={(e) => handlePreviewDataChange(e)}
+            type='number'
+            className='form-control'
+            name='maxWidth'
             value={maxWidth}
           />
         </div>
-        <div className="col">
+        <div className='col'>
           <label>Rotation degrees</label>
           <input
-            onChange={(e) =>
-              setPreviewData({
-                ...previewData,
-                rotationDegrees: e.target.value,
-              })
-            }
-            type="number"
-            className="form-control"
+            onChange={(e) => handlePreviewDataChange(e)}
+            type='number'
+            className='form-control'
+            name='rotationDegrees'
             value={rotationDegrees}
           />
         </div>
-        <div className="col">
+        <div className='col'>
           <label>Text color</label>
           <select
-            onChange={(e) =>
-              setPreviewData({
-                ...previewData,
-                textColor: e.target.value,
-              })
-            }
-            className="form-control"
+            onChange={(e) => handlePreviewDataChange(e)}
+            className='form-control'
+            name='textColor'
+            value={textColor}
           >
             <option>Please select</option>
-            <option value="black">Black</option>
-            <option value="white">White</option>
+            <option value='black'>Black</option>
+            <option value='white'>White</option>
+            <option value='red'>Red</option>
+            <option value='blue'>Blue</option>
+            <option value='yellow'>Yellow</option>
+            <option value='green'>Green</option>
+            <option value='purple'>Purple</option>
           </select>
         </div>
       </div>
 
-      <div className="form-group">
-        <label className="btn btn-secondary">
-          <input
-            onChange={handleChange("imagePhoto")}
-            type="file"
-            name="photo"
-            accept="image/*"
-          />
-        </label>
+      <div className='form-group'>
+        <label>Logo</label>
+        <input
+          onChange={handleChange('imagePhoto')}
+          type='file'
+          name='photo'
+          accept='image/*'
+          className='form-control'
+        />
       </div>
 
-      <div className="form-row mb-3">
-        <div className="col">
+      <div className='form-row mb-3'>
+        <div className='col'>
           <label>Image X Position</label>
           <input
-            onChange={(e) =>
-              setPreviewData({
-                ...previewData,
-                imageXPosition: e.target.value,
-              })
-            }
-            type="number"
-            className="form-control"
+            onChange={(e) => handlePreviewDataChange(e)}
+            type='number'
+            className='form-control'
+            name='imageXPosition'
             value={imageXPosition}
           />
         </div>
-        <div className="col">
+        <div className='col'>
           <label>Image Y Position</label>
           <input
-            onChange={(e) =>
-              setPreviewData({
-                ...previewData,
-                imageYPosition: e.target.value,
-              })
-            }
-            type="number"
-            className="form-control"
+            onChange={(e) => handlePreviewDataChange(e)}
+            type='number'
+            className='form-control'
+            name='imageYPosition'
             value={imageYPosition}
           />
         </div>
-        <div className="col">
+        <div className='col'>
           <label>Image Width</label>
           <input
-            onChange={(e) =>
-              setPreviewData({
-                ...previewData,
-                imageWidth: e.target.value,
-              })
-            }
-            type="number"
-            className="form-control"
+            onChange={(e) => handlePreviewDataChange(e)}
+            type='number'
+            className='form-control'
+            name='imageWidth'
             value={imageWidth}
           />
         </div>
-        <div className="col">
+        <div className='col'>
           <label>Image Height</label>
           <input
-            onChange={(e) =>
-              setPreviewData({
-                ...previewData,
-                imageHeight: e.target.value,
-              })
-            }
-            type="number"
-            className="form-control"
+            onChange={(e) => handlePreviewDataChange(e)}
+            type='number'
+            className='form-control'
+            name='imageHeight'
             value={imageHeight}
           />
         </div>
       </div>
       {/* Ending of extra */}
 
-      <div className="form-group">
-        <label className="text-muted">Name</label>
+      <h3>Product details</h3>
+      <div className='form-group'>
+        <label className='text-muted'>Name</label>
         <input
-          onChange={handleChange("name")}
-          type="text"
-          className="form-control"
+          onChange={handleChange('name')}
+          type='text'
+          className='form-control'
           value={name}
         />
       </div>
 
-      <div className="form-group">
-        <label className="text-muted">Description</label>
+      <div className='form-group'>
+        <label className='text-muted'>Description</label>
         <textarea
-          onChange={handleChange("description")}
-          className="form-control"
+          onChange={handleChange('description')}
+          className='form-control'
           value={description}
         />
       </div>
 
-      <div className="form-group">
-        <label className="text-muted">Price</label>
+      <div className='form-group'>
+        <label className='text-muted'>Price</label>
         <input
-          onChange={handleChange("price")}
-          type="number"
-          className="form-control"
+          onChange={handleChange('price')}
+          type='number'
+          className='form-control'
           value={price}
         />
       </div>
 
-      <div className="form-group">
-        <label className="text-muted">Category</label>
-        <select onChange={handleChange("category")} className="form-control">
+      <div className='form-group'>
+        <label className='text-muted'>Shipping</label>
+        <select
+          onChange={handleChange('shipping')}
+          className='form-control'
+          value={shipping}
+        >
           <option>Please select</option>
-          {categories &&
-            categories.map((c, i) => (
-              <option key={i} value={c._id}>
-                {c.name}
-              </option>
-            ))}
+          <option value='0'>No</option>
+          <option value='1'>Yes</option>
         </select>
       </div>
 
-      <div className="form-group">
-        <label className="text-muted">Shipping</label>
-        <select onChange={handleChange("shipping")} className="form-control">
-          <option>Please select</option>
-          <option value="0">No</option>
-          <option value="1">Yes</option>
+      <div className='form-group'>
+        <label>Category</label>
+        <select
+          onChange={handleChange('category')}
+          className='form-control'
+          value={category}
+        >
+          <option value=''>Please select</option>
+          {categories.map((category) => (
+            <option value={category._id}>{category.name}</option>
+          ))}
         </select>
       </div>
 
-      <div className="form-group">
-        <label className="text-muted">Quantity</label>
+      <div className='form-group'>
+        <label className='text-muted'>Quantity</label>
         <input
-          onChange={handleChange("quantity")}
-          type="number"
-          className="form-control"
+          onChange={handleChange('quantity')}
+          type='number'
+          className='form-control'
           value={quantity}
         />
       </div>
 
-      <button className="btn btn-outline-primary">Update Product</button>
+      <button className='btn btn-primary'>Update Product</button>
     </form>
   );
 
   const showError = () => (
     <div
-      className="alert alert-danger"
-      style={{ display: error ? "" : "none" }}
+      className='alert alert-danger'
+      style={{ display: error ? '' : 'none' }}
     >
       {error}
     </div>
@@ -534,8 +739,8 @@ const UpdateProduct = ({ match }) => {
 
   const showSuccess = () => (
     <div
-      className="alert alert-info"
-      style={{ display: createdProduct ? "" : "none" }}
+      className='alert alert-info'
+      style={{ display: createdProduct ? '' : 'none' }}
     >
       <h2>{`${createdProduct}`} is updated!</h2>
     </div>
@@ -543,7 +748,7 @@ const UpdateProduct = ({ match }) => {
 
   const showLoading = () =>
     loading && (
-      <div className="alert alert-success">
+      <div className='alert alert-success'>
         <h2>Loading...</h2>
       </div>
     );
@@ -551,7 +756,7 @@ const UpdateProduct = ({ match }) => {
   const redirectUser = () => {
     if (redirectToProfile) {
       if (!error) {
-        return <Redirect to="/" />;
+        return <Redirect to='/' />;
       }
     }
   };
@@ -559,12 +764,12 @@ const UpdateProduct = ({ match }) => {
   return (
     <>
       <Layout
-        title="Update Product"
+        title='Update Product'
         description={`G'day ${user.name}, ready to update product?`}
       />
-      <div className="container">
-        <div className="row">
-          <div className="col-md-12">
+      <div className='container'>
+        <div className='row'>
+          <div className='col-md-12'>
             {showLoading()}
             {showSuccess()}
             {showError()}

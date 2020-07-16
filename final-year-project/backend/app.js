@@ -17,22 +17,18 @@ const rating = require('./routes/rating');
 const check = require('./routes/check');
 const app = express();
 
-
 mongoose.connect(process.env.DATABASE, {
-        useNewUrlParser: true,
-        useCreateIndex: true,
-        useUnifiedTopology: true,
-        useFindAndModify:false
-    })
-    
-
+  useNewUrlParser: true,
+  useCreateIndex: true,
+  useUnifiedTopology: true,
+  useFindAndModify: false,
+});
 
 app.use(morgan('dev'));
-app.use(bodyParser.json());
+app.use(bodyParser.json({ limit: '1mb' }));
 app.use(cookieParser());
 app.use(expressValidator());
 app.use(cors());
-
 
 app.use('/artink', userprofiling);
 app.use('/artink', user);
@@ -44,5 +40,4 @@ app.use('/artink', rating);
 app.use('/artink', check);
 const port = process.env.PORT || 5000;
 
-app.listen(port, () => {
- });
+app.listen(port, () => console.log(`Server started at port ${port}`));

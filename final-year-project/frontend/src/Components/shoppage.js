@@ -5,6 +5,7 @@ import { getCategories, getFilteredProducts } from "./Componentsfetch";
 import Checkbox from "./categoryfilter";
 
 import { prices } from "./fixedPrices";
+import Search from "./productsearch";
 
 const Shop = () => {
   const [myFilters, setMyFilters] = useState({
@@ -32,7 +33,7 @@ const Shop = () => {
       if (data.error) {
         setError(data.error);
       } else {
-        setFilteredResults(data.data);
+        setFilteredResults(data);
         setSize(data.size);
         setSkip(0);
       }
@@ -102,6 +103,11 @@ const Shop = () => {
       />
       <section className="ftco-section bg-light">
         <div className="container">
+          <div className="row ">
+            <div className="col-12">
+              <Search />
+            </div>
+          </div>
           <div className="row">
             <div className="col-3 ">
               <h5 style={{ textAlign: "center" }}>Filter by categories</h5>

@@ -6,9 +6,9 @@
   border-radius: 78px;
 }
 
-.btn {
+/* .btn {
   background-color: black;
-}
+} */
 
 .nav {
   height: 50px;
@@ -134,4 +134,17 @@
   100% {
     background-position: 0% 50%;
   }
+}
+
+.btn.btn-primary {
+  background-color: #0863ad;
+}
+
+.btn-outline-info:hover {
+  color: black;
+}
+
+.nav-link {
+  color: black;
+  font-weight: bold;
 }
