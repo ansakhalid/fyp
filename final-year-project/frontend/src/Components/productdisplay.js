@@ -18,6 +18,10 @@ const Card = ({
   setRun = (f) => f,
   run = undefined,
 }) => {
+  const {
+    user: { role },
+  } = isAuthenticated();
+
   const [redirect, setRedirect] = useState(false);
   const [count, setCount] = useState(product.count);
 

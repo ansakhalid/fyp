@@ -4,10 +4,9 @@ const { errorHandler } = require('../handlingerror/errorhandler');
 
 
 
-
 exports.orderById = (req, res, next, id) => {
   Order.findById(id)
-    .populate('products.product', 'name price')
+    .populate('products.product', 'id name price')
     .exec((err, order) => {
       if (err || !order) {
         return res.status(400).json({
@@ -70,7 +69,6 @@ exports.getStatusValues = (req, res) => {
 };
 
 exports.updateOrderStatus = (req, res) => {
-
   Order.update(
     { _id: req.body.orderId },
     { $set: { status: req.body.status } },

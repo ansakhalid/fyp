@@ -4,10 +4,12 @@ import { isAuthenticated } from '../path/fetchprofiling';
 import { listOrders, getStatusValues, updateOrderStatus } from './fetchadmin';
 import ShowImage from '../Components/image';
 import { Link } from 'react-router-dom';
+import OrdersChart from './ordersChart';
 
 const Record = () => {
   const [orders, setOrders] = useState([]);
   const [statusValues, setStatusValues] = useState([]);
+  const [chartData, setChartData] = useState(null);
 
   const { user, token } = isAuthenticated();
 
@@ -17,6 +19,24 @@ const Record = () => {
         console.log(data.error);
       } else {
         setOrders(data);
+        let groupedData = data.reduce((r, a) => {
+          r[a.createdAt] = r[a.createdAt] || [];
+          r[a.createdAt].products = r[a.createdAt].products || [];
+          r[a.createdAt].products.push(a);
+          return r;
+        }, Object.create(null));
+        const res = Object.keys(groupedData).map((key) => {
+          const products = groupedData[key].products;
+          const count = products.length;
+          const totalAmount = products.reduce((a, p) => a + p.amount, 0);
+          return {
+            date: key,
+            products,
+            count,
+            totalAmount,
+          };
+        });
+        setChartData(res);
       }
     });
   };
@@ -98,6 +118,13 @@ const Record = () => {
       />
       <section className='ftco-section'>
         <div className='container'>
+          {chartData && (
+            <div className='row'>
+              <div className='col-md-12'>
+                <OrdersChart data={chartData} />
+              </div>
+            </div>
+          )}
           <div className='row'>
             <div className='col-md-12'>
               {showOrdersLength()}

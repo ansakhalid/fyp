@@ -1,19 +1,22 @@
-import React, { useState, useEffect } from "react";
-import Layout from "../Components/deafaultdesign";
-import { isAuthenticated } from "../path/fetchprofiling";
-import { Redirect } from "react-router-dom";
-import { read, update, updateUser } from "./fetchuser";
+import React, { useState, useEffect } from 'react';
+import Layout from '../Components/deafaultdesign';
+import { isAuthenticated } from '../path/fetchprofiling';
+import { Redirect } from 'react-router-dom';
+import { read, update, updateUser } from './fetchuser';
 
 const Profile = ({ match }) => {
   const [values, setValues] = useState({
-    name: "",
-    email: "",
-    password: "",
+    name: '',
+    email: '',
+    password: '',
     error: false,
     success: false,
   });
 
-  const { token } = isAuthenticated();
+  const {
+    token,
+    user: { role },
+  } = isAuthenticated();
   const { name, email, password, success } = values;
 
   const init = (userId) => {
@@ -56,41 +59,45 @@ const Profile = ({ match }) => {
 
   const redirectUser = (success) => {
     if (success) {
-      return <Redirect to="/cart" />;
+      if (role.toString() === 'customer') {
+        return <Redirect to='/user/dashboard' />;
+      } else {
+        return <Redirect to='/designer/dashboard' />;
+      }
     }
   };
 
   const profileUpdate = (name, email, password) => (
     <form>
-      <div className="form-group">
-        <label className="text-dark">Name</label>
+      <div className='form-group'>
+        <label className='text-dark'>Name</label>
         <input
-          type="text"
-          onChange={handleChange("name")}
-          className="form-control"
+          type='text'
+          onChange={handleChange('name')}
+          className='form-control'
           value={name}
         />
       </div>
-      <div className="form-group">
-        <label className="text-dark">Email</label>
+      <div className='form-group'>
+        <label className='text-dark'>Email</label>
         <input
-          type="email"
-          onChange={handleChange("email")}
-          className="form-control"
+          type='email'
+          onChange={handleChange('email')}
+          className='form-control'
           value={email}
         />
       </div>
-      <div className="form-group">
-        <label className="text-dark">Password</label>
+      <div className='form-group'>
+        <label className='text-dark'>Password</label>
         <input
-          type="password"
-          onChange={handleChange("password")}
-          className="form-control"
+          type='password'
+          onChange={handleChange('password')}
+          className='form-control'
           value={password}
         />
       </div>
 
-      <button onClick={clickSubmit} className="btn btn-primary">
+      <button onClick={clickSubmit} className='btn btn-primary'>
         Submit
       </button>
     </form>
@@ -99,14 +106,14 @@ const Profile = ({ match }) => {
   return (
     <>
       <Layout
-        title="PROFILE UPDATE"
-        description="Update your profile here"
-        className="container-fluid"
+        title='PROFILE UPDATE'
+        description='Update your profile here'
+        className='container-fluid'
       />
-      <section className="ftco-section bg-light">
-        <div className="container ">
-          <div className="row">
-            <div className="col">
+      <section className='ftco-section bg-light'>
+        <div className='container '>
+          <div className='row'>
+            <div className='col'>
               {profileUpdate(name, email, password)}
               {redirectUser(success)}
             </div>

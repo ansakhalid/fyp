@@ -1,11 +1,14 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Layout from '../Components/deafaultdesign';
 import { isAuthenticated } from '../path/fetchprofiling';
 import { Link } from 'react-router-dom';
+import { addAppRating, getUserRating } from '../Components/Componentsfetch';
+import Rating from 'react-rating';
 
 const DesignerDashboard = () => {
   const {
-    user: { name, email, role },
+    user: { _id, name, email, role },
+    token,
   } = isAuthenticated();
 
   const designerLinks = () => {
@@ -22,6 +25,11 @@ const DesignerDashboard = () => {
           <li className='list-group-item'>
             <Link className='nav-link' to='/designer/products'>
               MANAGE LISTING
+            </Link>
+          </li>
+          <li className='list-group-item'>
+            <Link className='nav-link' to={`/profile/${_id}`}>
+              Update Profile
             </Link>
           </li>
         </ul>
@@ -44,6 +52,38 @@ const DesignerDashboard = () => {
     );
   };
 
+  const userId = isAuthenticated() && isAuthenticated().user._id;
+
+  const loadUserRating = () => {
+    getUserRating(userId, token).then((data) => {
+      if (data.error) {
+        console.log('Rating not found');
+        // setError(data.error);
+      } else {
+        console.log('Rating yeh ha:', data);
+        if (data.rating !== null) {
+          setUserRating(data.rating.rating);
+        }
+      }
+    });
+  };
+
+  const [userRating, setUserRating] = useState(0);
+
+  const setRating = (rating) => {
+    addAppRating(userId, token, rating)
+      .then((response) => {
+        // alert('App Rating Added!');
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  useEffect(() => {
+    loadUserRating();
+  }, []);
+
   return (
     <>
       <Layout
@@ -54,7 +94,22 @@ const DesignerDashboard = () => {
       <section className='ftco-section bg-light'>
         <div className='container'>
           <div className='row'>
-            <div className='col-3'>{designerLinks()}</div>
+            <div className='col-3'>
+              {designerLinks()}
+              <h4>App Rating</h4>
+              <Rating
+                initialRating={userRating}
+                stop={5}
+                emptySymbol={<i className='fa fa-star-o fa-2x medium'></i>}
+                fullSymbol={
+                  <i
+                    className='fa fa-star fa-2x medium'
+                    style={{ color: 'orange' }}
+                  ></i>
+                }
+                onChange={setRating}
+              />
+            </div>
             <div className='col-9'>{designerInfo()}</div>
           </div>
         </div>

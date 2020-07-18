@@ -132,6 +132,37 @@ export const createOrder = (userId, token, createOrderData) => {
     .catch((err) => console.log(err));
 };
 
+export const addAppRating = (userId, token, rating) => {
+  return fetch(`${API}/rating/create/${userId}/`, {
+    method: 'POST',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify({ rating }),
+  })
+    .then((response) => {
+      return response.json();
+    })
+    .catch((err) => console.log(err));
+};
+
+export const getUserRating = (userId, token) => {
+  return fetch(`${API}/rating/get/${userId}`, {
+    method: 'POST',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    },
+  })
+    .then((response) => {
+      return response.json();
+    })
+    .catch((err) => console.log(err));
+};
+
 export const addRating = (userId, productID, token, rating) => {
   return fetch(`${API}/rating/create/${userId}/${productID}`, {
     method: 'POST',

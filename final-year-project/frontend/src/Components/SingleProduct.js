@@ -3,8 +3,13 @@ import moment from 'moment';
 import { addItem } from './cart';
 import { Redirect } from 'react-router-dom';
 import Rating from 'react-rating';
+import { isAuthenticated } from '../path/fetchprofiling';
 
 function SingleProduct({ product }) {
+  const {
+    user: { role },
+  } = isAuthenticated();
+
   const [redirect, setRedirect] = useState(false);
 
   const showStock = (quantity) => {
@@ -89,9 +94,11 @@ function SingleProduct({ product }) {
         </span>
         <p className='small'>Added: {moment(product.createdAt).fromNow()}</p>
 
-        <button onClick={addToCart} class='btn btn-outline-info py-3 px-5'>
-          Add to Cart
-        </button>
+        {role.toString() !== 'admin' && (
+          <button onClick={addToCart} class='btn btn-outline-info py-3 px-5'>
+            Add to Cart
+          </button>
+        )}
       </div>
     </div>
   );

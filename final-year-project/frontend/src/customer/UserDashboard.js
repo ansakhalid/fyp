@@ -9,6 +9,8 @@ import { isAuthenticated } from '../path/fetchprofiling';
 import { Link } from 'react-router-dom';
 import { getPurchaseHistory } from './fetchuser';
 import moment from 'moment';
+import Rating from 'react-rating';
+import { addAppRating, getUserRating } from '../Components/Componentsfetch';
 
 const Dashboard = () => {
   const [history, setHistory] = useState([]);
@@ -46,10 +48,27 @@ const Dashboard = () => {
     });
   };
 
+  const userId = isAuthenticated() && isAuthenticated().user._id;
+
+  const loadUserRating = () => {
+    getUserRating(userId, token).then((data) => {
+      if (data.error) {
+        console.log('Rating not found');
+        // setError(data.error);
+      } else {
+        console.log('Rating yeh ha:', data);
+        if (data.rating !== null) {
+          setUserRating(data.rating.rating);
+        }
+      }
+    });
+  };
+
   useEffect(() => {
     loadProductsByArrival();
     loadProductsBySell();
     loadRecommendedProducts();
+    loadUserRating();
   }, []);
 
   const {
@@ -169,6 +188,18 @@ const Dashboard = () => {
     );
   };
 
+  const [userRating, setUserRating] = useState(0);
+
+  const setRating = (rating) => {
+    addAppRating(userId, token, rating)
+      .then((response) => {
+        // alert('App Rating Added!');
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
   return (
     <>
       <Layout
@@ -179,7 +210,22 @@ const Dashboard = () => {
       <section>
         <div className='container mt-3'>
           <div className='row'>
-            <div className='col-3'>{userLinks()}</div>
+            <div className='col-3'>
+              {userLinks()}
+              <h4>App Rating</h4>
+              <Rating
+                initialRating={userRating}
+                stop={5}
+                emptySymbol={<i className='fa fa-star-o fa-2x medium'></i>}
+                fullSymbol={
+                  <i
+                    className='fa fa-star fa-2x medium'
+                    style={{ color: 'orange' }}
+                  ></i>
+                }
+                onChange={setRating}
+              />
+            </div>
             <div className='col-9'>
               {userInfo()}
               {purchaseHistory(history)}

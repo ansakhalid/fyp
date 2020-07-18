@@ -1,13 +1,13 @@
-import React, { useState } from "react";
-import { Redirect } from "react-router-dom";
-import Layout from "../Components/deafaultdesign";
-import { signin, authenticate, isAuthenticated } from "../path/fetchprofiling";
+import React, { useState } from 'react';
+import { Redirect } from 'react-router-dom';
+import Layout from '../Components/deafaultdesign';
+import { signin, authenticate, isAuthenticated } from '../path/fetchprofiling';
 
 const Signin = () => {
   const [values, setValues] = useState({
-    email: "",
-    password: "",
-    error: "",
+    email: '',
+    password: '',
+    error: '',
     loading: false,
     redirectToReferrer: false,
   });
@@ -38,26 +38,26 @@ const Signin = () => {
 
   const signinForm = () => (
     <form>
-      <div className="form-group">
+      <div className='form-group'>
         <label>Email</label>
         <input
-          onChange={handleChange("email")}
-          type="email"
-          className="form-control"
+          onChange={handleChange('email')}
+          type='email'
+          className='form-control'
           value={email}
         />
       </div>
 
-      <div className="form-group">
+      <div className='form-group'>
         <label>Password</label>
         <input
-          onChange={handleChange("password")}
-          type="password"
-          className="form-control"
+          onChange={handleChange('password')}
+          type='password'
+          className='form-control'
           value={password}
         />
       </div>
-      <button onClick={clickSubmit} className="btn btn-primary">
+      <button onClick={clickSubmit} className='btn btn-primary'>
         Submit
       </button>
     </form>
@@ -65,8 +65,8 @@ const Signin = () => {
 
   const showError = () => (
     <div
-      className="alert alert-danger"
-      style={{ display: error ? "" : "none" }}
+      className='alert alert-danger'
+      style={{ display: error ? '' : 'none' }}
     >
       {error}
     </div>
@@ -74,38 +74,38 @@ const Signin = () => {
 
   const showLoading = () =>
     loading && (
-      <div className="alert alert-info">
+      <div className='alert alert-info'>
         <h2>Loading...</h2>
       </div>
     );
 
   const redirectUser = () => {
     if (redirectToReferrer) {
-      if (user && user.role.toString() === "admin") {
-        return <Redirect to="/admin/dashboard" />;
-      } else if (user && user.role.toString() === "designer") {
-        return <Redirect to="/designer/dashboard" />;
+      if (user && user.role.toString() === 'admin') {
+        return <Redirect to='/admin/dashboard' />;
+      } else if (user && user.role.toString() === 'designer') {
+        return <Redirect to='/designer/dashboard' />;
       } else {
-        return <Redirect to="/user/dashboard" />;
+        return <Redirect to='/user/dashboard' />;
       }
     }
     if (isAuthenticated()) {
-      return <Redirect to="/" />;
+      return <Redirect to='/' />;
     }
   };
 
   return (
     <>
       <Layout
-        title="Signin"
-        description="Provide following credentials to sign in to your account "
-        className="container col-md-8 offset-md-2"
+        title='Signin'
+        description='Provide following credentials to sign in to your account '
+        className='container col-md-8 offset-md-2'
       />
-      <section className="ftco-section bg-light">
-        <div className="container my-5">
-          <div className="row">
-            <div className="col-3"></div>
-            <div className="col-6">
+      <section className='ftco-section bg-light'>
+        <div className='container my-5'>
+          <div className='row'>
+            <div className='col-3'></div>
+            <div className='col-6'>
               {showLoading()}
               {showError()}
               {signinForm()}

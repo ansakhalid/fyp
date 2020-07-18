@@ -4,12 +4,12 @@ import { isAuthenticated } from '../path/fetchprofiling';
 import { listOrders, getStatusValues, updateOrderStatus } from './fetchadmin';
 import moment from 'moment';
 import { Link } from 'react-router-dom';
-import OrdersChart from './ordersChart';
+// import OrdersChart from './ordersChart';
 
 const Orders = () => {
   const [orders, setOrders] = useState([]);
   const [statusValues, setStatusValues] = useState([]);
-  const [chartData, setChartData] = useState(null);
+  // const [chartData, setChartData] = useState(null);
 
   const { user, token } = isAuthenticated();
 
@@ -19,24 +19,24 @@ const Orders = () => {
         console.log(data.error);
       } else {
         setOrders(data);
-        let groupedData = data.reduce((r, a) => {
-          r[a.createdAt] = r[a.createdAt] || [];
-          r[a.createdAt].products = r[a.createdAt].products || [];
-          r[a.createdAt].products.push(a);
-          return r;
-        }, Object.create(null));
-        const res = Object.keys(groupedData).map((key) => {
-          const products = groupedData[key].products;
-          const count = products.length;
-          const totalAmount = products.reduce((a, p) => a + p.amount, 0);
-          return {
-            date: key,
-            products,
-            count,
-            totalAmount,
-          };
-        });
-        setChartData(res);
+        // let groupedData = data.reduce((r, a) => {
+        //   r[a.createdAt] = r[a.createdAt] || [];
+        //   r[a.createdAt].products = r[a.createdAt].products || [];
+        //   r[a.createdAt].products.push(a);
+        //   return r;
+        // }, Object.create(null));
+        // const res = Object.keys(groupedData).map((key) => {
+        //   const products = groupedData[key].products;
+        //   const count = products.length;
+        //   const totalAmount = products.reduce((a, p) => a + p.amount, 0);
+        //   return {
+        //     date: key,
+        //     products,
+        //     count,
+        //     totalAmount,
+        //   };
+        // });
+        // setChartData(res);
       }
     });
   };
@@ -119,13 +119,13 @@ const Orders = () => {
       />
       <section className='ftco-section '>
         <div className='container'>
-          {chartData && (
+          {/* {chartData && (
             <div className='row'>
               <div className='col-md-12'>
                 <OrdersChart data={chartData} />
               </div>
             </div>
-          )}
+          )} */}
           <div className='row'>
             <div className='col-md-12'>
               {showOrdersLength()}

@@ -30,6 +30,42 @@ exports.create = async (req, res) => {
   });
 };
 
+exports.addAppRating = async (req, res) => {
+  let rating = await Rating.findOne({
+    user: req.profile,
+    type: 0,
+  });
+
+  if (!rating) {
+    rating = new Rating(req.body);
+    rating.user = req.profile;
+    rating.type = 0;
+  } else {
+    rating.rating = req.body.rating;
+  }
+
+  rating.save((err, data) => {
+    if (err) {
+      return res.status(400).json({
+        error: errorHandler(err),
+      });
+    }
+    res.json({ data });
+  });
+};
+
+exports.getUserRating = async (req, res) => {
+  console.log('Profile:', req.profile);
+  let rating = await Rating.findOne({
+    user: req.profile,
+    type: 0,
+  });
+
+  console.log('Rating yeh ha:', rating);
+
+  res.json({ rating });
+};
+
 exports.rem = (req, res) => {
   Rating.find({}, function (err, data) {
     let userss = data.map((ratings) => {

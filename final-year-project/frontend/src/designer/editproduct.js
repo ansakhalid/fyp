@@ -12,6 +12,12 @@ import GreenShirt from '../images/Shirts/Green.png';
 import BlueShirt from '../images/Shirts/Blue.png';
 import PurpleShirt from '../images/Shirts/Purple.png';
 import RedShirt from '../images/Shirts/Red.png';
+import GreyShirt from '../images/Shirts/bright-grey.png';
+import DarkPinkShirt from '../images/Shirts/dark-pink.png';
+import LightBlueShirt from '../images/Shirts/light-blue.png';
+import LightPinkShirt from '../images/Shirts/light-pink.png';
+import OrangeShirt from '../images/Shirts/orange.png';
+import PeachShirt from '../images/Shirts/peach.png';
 
 // Hoodies
 import WhiteHoodie from '../images/Hoodies/White.png';
@@ -20,6 +26,12 @@ import GreenHoodie from '../images/Hoodies/Green.png';
 import BlueHoodie from '../images/Hoodies/Blue.png';
 import PurpleHoodie from '../images/Hoodies/Purple.png';
 import RedHoodie from '../images/Hoodies/Red.png';
+import GreyHoodie from '../images/Hoodies/grey.png';
+import DarkPinkHoodie from '../images/Hoodies/dark-pink.png';
+import LightBlueHoodie from '../images/Hoodies/light-blue.png';
+import LightPinkHoodie from '../images/Hoodies/light-pink.png';
+import OrangeHoodie from '../images/Hoodies/orange.png';
+import PeachHoodie from '../images/Hoodies/peach.png';
 
 // Sweaters
 import WhiteSweater from '../images/Sweaters/White.png';
@@ -28,6 +40,12 @@ import GreenSweater from '../images/Sweaters/Green.png';
 import BlueSweater from '../images/Sweaters/Blue.png';
 import PurpleSweater from '../images/Sweaters/Purple.png';
 import RedSweater from '../images/Sweaters/Red.png';
+import GreySweater from '../images/Sweaters/grey.png';
+import DarkPinkSweater from '../images/Sweaters/dark-pink.png';
+import LightBlueSweater from '../images/Sweaters/light-blue.png';
+import LightPinkSweater from '../images/Sweaters/light-pink.png';
+import OrangeSweater from '../images/Sweaters/orange.png';
+import PeachSweater from '../images/Sweaters/peach.png';
 
 // Trousers
 import WhiteTrouser from '../images/Trousers/White.png';
@@ -36,6 +54,12 @@ import GreenTrouser from '../images/Trousers/Green.png';
 import BlueTrouser from '../images/Trousers/Blue.png';
 import PurpleTrouser from '../images/Trousers/Purple.png';
 import RedTrouser from '../images/Trousers/Red.png';
+import GreyTrouser from '../images/Trousers/grey.png';
+import DarkPinkTrouser from '../images/Trousers/dark-pink.png';
+import LightBlueTrouser from '../images/Trousers/light-blue.png';
+import LightPinkTrouser from '../images/Trousers/light-pink.png';
+import OrangeTrouser from '../images/Trousers/orange.png';
+import PeachTrouser from '../images/Trousers/peach.png';
 
 const UpdateProduct = ({ match }) => {
   const canvasRef = useRef(null);
@@ -75,7 +99,7 @@ const UpdateProduct = ({ match }) => {
     name: '',
     description: '',
     price: '',
-    shipping: '',
+    shipping: '1',
     quantity: '',
     category: '',
     photo: '',
@@ -260,6 +284,7 @@ const UpdateProduct = ({ match }) => {
       formData.set('price', price);
       formData.set('shipping', shipping);
       formData.set('quantity', quantity);
+      formData.set('category', category);
     }
   }, [
     imageURL,
@@ -270,8 +295,17 @@ const UpdateProduct = ({ match }) => {
     productColor,
   ]);
 
+  const [disableMoreColors, setDisableMoreColors] = useState(true);
+
   const handleChange = (name) => (event) => {
-    const value = name === 'photo' ? event.target.files[0] : event.target.value;
+    let value = name === 'photo' ? event.target.files[0] : event.target.value;
+    if (name === 'productColor') {
+      if (value < 6) {
+        setDisableMoreColors(true);
+      } else {
+        setDisableMoreColors(false);
+      }
+    }
     formData.set(name, value);
     setValues({ ...values, [name]: value });
 
@@ -335,6 +369,24 @@ const UpdateProduct = ({ match }) => {
           case '5':
             setImageDataURL(PurpleShirt);
             break;
+          case '7':
+            setImageDataURL(GreyShirt);
+            break;
+          case '8':
+            setImageDataURL(DarkPinkShirt);
+            break;
+          case '9':
+            setImageDataURL(LightBlueShirt);
+            break;
+          case '10':
+            setImageDataURL(LightPinkShirt);
+            break;
+          case '11':
+            setImageDataURL(OrangeShirt);
+            break;
+          case '12':
+            setImageDataURL(PeachShirt);
+            break;
           default:
             break;
         }
@@ -358,6 +410,24 @@ const UpdateProduct = ({ match }) => {
             break;
           case '5':
             setImageDataURL(PurpleHoodie);
+            break;
+          case '7':
+            setImageDataURL(GreyHoodie);
+            break;
+          case '8':
+            setImageDataURL(DarkPinkHoodie);
+            break;
+          case '9':
+            setImageDataURL(LightBlueHoodie);
+            break;
+          case '10':
+            setImageDataURL(LightPinkHoodie);
+            break;
+          case '11':
+            setImageDataURL(OrangeHoodie);
+            break;
+          case '12':
+            setImageDataURL(PeachHoodie);
             break;
           default:
             break;
@@ -383,6 +453,24 @@ const UpdateProduct = ({ match }) => {
           case '5':
             setImageDataURL(PurpleSweater);
             break;
+          case '7':
+            setImageDataURL(GreySweater);
+            break;
+          case '8':
+            setImageDataURL(DarkPinkSweater);
+            break;
+          case '9':
+            setImageDataURL(LightBlueSweater);
+            break;
+          case '10':
+            setImageDataURL(LightPinkSweater);
+            break;
+          case '11':
+            setImageDataURL(OrangeSweater);
+            break;
+          case '12':
+            setImageDataURL(PeachSweater);
+            break;
           default:
             break;
         }
@@ -406,6 +494,24 @@ const UpdateProduct = ({ match }) => {
             break;
           case '5':
             setImageDataURL(PurpleTrouser);
+            break;
+          case '7':
+            setImageDataURL(GreyTrouser);
+            break;
+          case '8':
+            setImageDataURL(DarkPinkTrouser);
+            break;
+          case '9':
+            setImageDataURL(LightBlueTrouser);
+            break;
+          case '10':
+            setImageDataURL(LightPinkTrouser);
+            break;
+          case '11':
+            setImageDataURL(OrangeTrouser);
+            break;
+          case '12':
+            setImageDataURL(PeachTrouser);
             break;
           default:
             break;
@@ -513,6 +619,25 @@ const UpdateProduct = ({ match }) => {
             <option value='3'>Yellow</option>
             <option value='4'>White</option>
             <option value='5'>Purple</option>
+            <option value='6'>More colors</option>
+          </select>
+        </div>
+
+        <div className='col'>
+          <label>Product color</label>
+          <select
+            onChange={handleChange('productColor')}
+            className='form-control'
+            value={productColor}
+            disabled={disableMoreColors}
+          >
+            <option value=''>Please select</option>
+            <option value='7'>Grey</option>
+            <option value='8'>Dark Pink</option>
+            <option value='9'>Light Blue</option>
+            <option value='10'>Light Pink</option>
+            <option value='11'>Orange</option>
+            <option value='12'>Peach</option>
           </select>
         </div>
       </div>
@@ -687,7 +812,7 @@ const UpdateProduct = ({ match }) => {
         />
       </div>
 
-      <div className='form-group'>
+      {/* <div className='form-group'>
         <label className='text-muted'>Shipping</label>
         <select
           onChange={handleChange('shipping')}
@@ -698,7 +823,7 @@ const UpdateProduct = ({ match }) => {
           <option value='0'>No</option>
           <option value='1'>Yes</option>
         </select>
-      </div>
+      </div> */}
 
       <div className='form-group'>
         <label>Category</label>

@@ -3,11 +3,16 @@ import Layout from './deafaultdesign';
 import { read, listRelated } from './Componentsfetch';
 import Card from './productdisplay';
 import SingleProduct from './SingleProduct';
+import { isAuthenticated } from '../path/fetchprofiling';
 
 const Product = (props) => {
   const [product, setProduct] = useState(null);
   const [relatedProduct, setRelatedProduct] = useState([]);
   const [setError] = useState(false);
+
+  const {
+    user: { role },
+  } = isAuthenticated();
 
   const loadSingleProduct = (productId) => {
     read(productId).then((data) => {

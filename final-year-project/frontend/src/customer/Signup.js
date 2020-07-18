@@ -1,23 +1,23 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
-import Layout from "../Components/deafaultdesign";
-import { signup } from "../path/fetchprofiling";
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
+import Layout from '../Components/deafaultdesign';
+import { signup } from '../path/fetchprofiling';
 
 const Signup = () => {
   const [values, setValues] = useState({
-    name: "",
-    email: "",
-    password: "",
-    role: "",
-    error: "",
+    name: '',
+    email: '',
+    password: '',
+    role: '',
+    error: '',
     success: false,
   });
 
   const isActive = (history, path) => {
     if (history.location.pathname === path) {
-      return { color: "#ff9900" };
+      return { color: '#ff9900' };
     } else {
-      return { color: "#ffffff" };
+      return { color: '#ffffff' };
     }
   };
 
@@ -36,11 +36,11 @@ const Signup = () => {
       } else {
         setValues({
           ...values,
-          name: "",
-          email: "",
-          password: "",
-          role: "",
-          error: "",
+          name: '',
+          email: '',
+          password: '',
+          role: '',
+          error: '',
           success: true,
         });
       }
@@ -49,46 +49,45 @@ const Signup = () => {
 
   const signUpForm = () => (
     <form>
-      <div className="form-group">
+      <div className='form-group'>
         <label>Name</label>
         <input
-          onChange={handleChange("name")}
-          type="text"
-          className="form-control"
+          onChange={handleChange('name')}
+          type='text'
+          className='form-control'
           value={name}
         />
       </div>
 
-      <div className="form-group">
+      <div className='form-group'>
         <label>Email</label>
         <input
-          onChange={handleChange("email")}
-          type="email"
-          className="form-control"
+          onChange={handleChange('email')}
+          type='email'
+          className='form-control'
           value={email}
         />
       </div>
 
-      <div className="form-group">
+      <div className='form-group'>
         <label>Password</label>
         <input
-          onChange={handleChange("password")}
-          type="password"
-          className="form-control"
+          onChange={handleChange('password')}
+          type='password'
+          className='form-control'
           value={password}
         />
       </div>
 
-      <div className="form-group">
+      <div className='form-group'>
         <label>Role</label>
-        <select onChange={handleChange("role")} className="form-control">
+        <select onChange={handleChange('role')} className='form-control'>
           <option>Please select from the below mentioned options</option>
-          <option value="designer">designer</option>
-          <option value="customer">customer</option>
-          <option value="admin">admin</option>
+          <option value='designer'>designer</option>
+          <option value='customer'>customer</option>
         </select>
       </div>
-      <button onClick={clickSubmit} className="btn btn-primary">
+      <button onClick={clickSubmit} className='btn btn-primary'>
         Submit
       </button>
     </form>
@@ -96,8 +95,8 @@ const Signup = () => {
 
   const showError = () => (
     <div
-      className="alert alert-danger"
-      style={{ display: error ? "" : "none" }}
+      className='alert alert-danger'
+      style={{ display: error ? '' : 'none' }}
     >
       {error}
     </div>
@@ -105,24 +104,24 @@ const Signup = () => {
 
   const showSuccess = () => (
     <div
-      className="alert alert-info"
-      style={{ display: success ? "" : "none" }}
+      className='alert alert-info'
+      style={{ display: success ? '' : 'none' }}
     >
-      New account is created. Please <Link to="/signin">Signin</Link>
+      New account is created. Please <Link to='/signin'>Signin</Link>
     </div>
   );
 
   return (
     <>
       <Layout
-        title="Signup"
-        description="Signup to enjoy "
-        className="container col-md-8 offset-md-2"
+        title='Signup'
+        description='Signup to enjoy '
+        className='container col-md-8 offset-md-2'
       />
-      <div className="container my-5">
-        <div className="row">
-          <div className="col-3"></div>
-          <div className="col-6">
+      <div className='container my-5'>
+        <div className='row'>
+          <div className='col-3'></div>
+          <div className='col-6'>
             {showSuccess()}
             {showError()}
             {signUpForm()}
