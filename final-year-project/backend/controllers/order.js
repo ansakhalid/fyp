@@ -68,17 +68,60 @@ exports.getStatusValues = (req, res) => {
   res.json(Order.schema.path('status').enumValues);
 };
 
-exports.updateOrderStatus = (req, res) => {
+eexports.updateOrderStatus = (req, res,next) => {
   Order.update(
     { _id: req.body.orderId },
     { $set: { status: req.body.status } },
-    (err, order) => {
+    (err, orders) => {
       if (err) {
         return res.status(400).json({
           error: errorHandler(err),
         });
       }
-      res.json(order);
+     
+
+      //const p = new Order(req.body.order);
+    
+      let a = req.body.orderId;
+      let k;
+      Order.findById(a)
+      .exec((err, order) => {
+        if (err || !order) {
+          return res.status(400).json({
+            error: errorHandler(err),
+          });
+        }
+        req.order = order;
+        next();
+        k=order.user;
+        User.findById(k).exec((err, user) => {
+          if (err || !user) {
+            return res.status(400).json({
+              error: 'User not found',
+            });
+          }
+          req.profile = user;
+          next();
+          console.log(user.email)
+          const emaildatak = {
+            from: 'noreply@artink.com',
+            to: user.email,
+            subject: 'Status updated',
+            html: `
+            <p>Customer name: ${user.name}</p>
+             <p>Updated status: ${req.body.status}</p>
+            <p>Login to dashboard for more details.</p>
+        `,
+          };
+          mg.messages().send(emaildatak)
+        });
+      
+      });
+
+      
+    
+      res.json(orders);
     }
   );
 };
+
