@@ -1,5 +1,6 @@
 const { Order } = require('../models/order');
 const { errorHandler } = require('../handlingerror/errorhandler');
+const User = require('../models/user');
 
 
 
@@ -68,7 +69,7 @@ exports.getStatusValues = (req, res) => {
   res.json(Order.schema.path('status').enumValues);
 };
 
-eexports.updateOrderStatus = (req, res,next) => {
+exports.updateOrderStatus = (req, res,next) => {
   Order.update(
     { _id: req.body.orderId },
     { $set: { status: req.body.status } },
